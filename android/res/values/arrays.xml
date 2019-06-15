@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pref_particle_animation_title">
+        <item>Top to Bottom</item>
+        <item>Bottom To Top</item>
+        <item>Random</item>
+    </string-array>
+    <string-array name="pref_particle_animation_values">
+        <item>-1</item>
+        <item>1</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="pref_particle_density_title">
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
+    </string-array>
+    <string-array name="pref_particle_density_values">
+        <item>1000</item>
+        <item>500</item>
+        <item>250</item>
+    </string-array>
+    <string-array name="pref_particle_speed_title">
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
+    </string-array>
+    <string-array name="pref_particle_speed_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="pref_random_time_title">
+        <item>Every 3 Second</item>
+        <item>Every 2 Second</item>
+        <item>Every second</item>
+        <item>Every half second</item>
+    </string-array>
+    <string-array name="pref_random_time_values">
+        <item>3000</item>
+        <item>2000</item>
+        <item>1000</item>
+        <item>500</item>
+    </string-array>
+</resources>

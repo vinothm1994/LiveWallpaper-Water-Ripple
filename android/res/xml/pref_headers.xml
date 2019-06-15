@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:defaultValue="1"
+        android:key="bg"
+        android:summary="Choose background..."
+        android:title="Choose Background" />
+    <PreferenceScreen
+        android:key="content_particle"
+        android:summary="customise particles..."
+        android:title="Particles">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="floating_particle"
+            android:summary="Set floating particle on/off"
+            android:title="Floating Particle" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="particle"
+            android:summary="Set particle on/off"
+            android:title="Particle Effect" />
+        <Preference
+            android:key="particle_type"
+            android:summary="Choose particle type"
+            android:title="Particle Type" />
+        <ListPreference
+            android:defaultValue="1000"
+            android:entries="@array/pref_particle_density_title"
+            android:entryValues="@array/pref_particle_density_values"
+            android:key="particle_density"
+            android:title="Particle Density" />
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/pref_particle_speed_title"
+            android:entryValues="@array/pref_particle_speed_values"
+            android:key="particle_speed"
+            android:summary="Choose floating speed of the particle"
+            android:title="Particle Speed" />
+        <ListPreference
+            android:defaultValue="-1"
+            android:entries="@array/pref_particle_animation_title"
+            android:entryValues="@array/pref_particle_animation_values"
+            android:key="particle_animation"
+            android:title="Particle Animation" />
+        <Preference android:key="hello1" />
+    </PreferenceScreen>
+    <PreferenceScreen
+        android:key="content_ripple"
+        android:summary="customise ripple settings..."
+        android:title="Ripple">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="ripple"
+            android:summary="Set ripple on/off"
+            android:title="Ripple Effect" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="sound"
+            android:summary="Set sound on/off"
+            android:title="Drop Sound" />
+        <SeekBarPreference
+            android:defaultValue="2"
+            android:key="radius"
+            android:max="10"
+            android:summary="set ripple radius..."
+            android:title="Radius" />
+        <SeekBarPreference
+            android:defaultValue="4"
+            android:key="displacement"
+            android:max="10"
+            android:summary="set water displacement..."
+            android:title="Displacement" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="random_drop"
+            android:summary="Set random drop on/off"
+            android:title="Random Drop" />
+        <ListPreference
+            android:defaultValue="2000"
+            android:entries="@array/pref_random_time_title"
+            android:entryValues="@array/pref_random_time_values"
+            android:key="frequency"
+            android:summary="set timer for random drop"
+            android:title="Drop Frequency" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="water_tail"
+            android:summary="Set water tail on/off"
+            android:title="Water Tail" />
+    </PreferenceScreen>
+    <Preference
+        android:key="reset"
+        android:summary="Revert all settings to their default values."
+        android:title="Reset Settings" />
+</PreferenceScreen>
