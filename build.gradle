@@ -46,7 +46,6 @@ project(":android") {
     configurations { natives }
 
     dependencies {
-        compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
@@ -63,16 +62,7 @@ project(":android") {
     }
 }
 
-project(":core") {
-    apply plugin: "java"
 
-
-    dependencies {
-        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
-        
-    }
-}
 
 tasks.eclipse.doLast {
     delete ".project"

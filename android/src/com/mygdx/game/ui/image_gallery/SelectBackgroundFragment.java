@@ -51,11 +51,6 @@ public class SelectBackgroundFragment extends Fragment implements OnImageSelecti
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(v -> {
-            requireActivity().onBackPressed();
-
-        });
         initData();
         setUidata();
     }

@@ -11,17 +11,34 @@
     <include layout="@layout/toolbar" />
 
     <FrameLayout
-        android:layout_margin="3dp"
-        android:id="@+id/banner_iv"
+        android:id="@+id/child_fra_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_margin="3dp"
         android:layout_weight="1" />
 
-    <Button
+
+    <FrameLayout
         android:id="@+id/set_wallpaper_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="30dp"
-        android:text="Set LiveWallpaper" />
+        android:layout_gravity="bottom"
+        android:layout_margin="20dp"
+        android:background="@drawable/set_wall_bg"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackgroundBorderless">
+
+        <TextView
+            style="@style/StickerPreviewButtonText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:clickable="false"
+            android:drawablePadding="8dp"
+            android:focusable="false"
+            android:foreground="@android:color/transparent"
+            android:text="Set LiveWallpaper" />
+    </FrameLayout>
 </LinearLayout>

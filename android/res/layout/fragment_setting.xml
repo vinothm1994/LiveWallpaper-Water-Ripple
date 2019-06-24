@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/card_detailing"
+    android:background="@color/white"
     android:orientation="vertical"
+
     tools:context=".ui.bgSelector.SettingFragment">
 
     <include layout="@layout/toolbar" />
@@ -18,50 +18,68 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="5dp"
             android:orientation="vertical">
 
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/sw_ripple"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="Watter Ripple Effect" />
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/sw_particle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="Particle Effect" />
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/sw_sound"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="Bubble Sound" />
+                android:background="#86D5D5D5"
+                android:drawableLeft="@drawable/ic_settings"
+                android:drawablePadding="2dp"
+                android:drawableTint="#FF02B396"
+                android:paddingLeft="5dp"
+                android:paddingTop="12dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="12dp"
+                android:text="Configuration"
+                android:textColor="#02B396"
+                android:textSize="17dp"
+                android:textStyle="bold" />
 
             <LinearLayout
-                android:id="@+id/ll_cha_bg"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:orientation="vertical">
 
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/sw_ripple"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:text="Change backgound"
-                    android:textColor="@color/black"
-                    android:textSize="18dp" />
+                    android:text="Watter Ripple Effect" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="#E4E4E4" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/sw_particle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="Particle Effect" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="#E4E4E4" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/sw_sound"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="Bubble Sound" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="#E4E4E4" />
+
 
             </LinearLayout>
-
-
-
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

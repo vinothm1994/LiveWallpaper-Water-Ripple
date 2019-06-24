@@ -59,6 +59,8 @@ public class Assets {
         }
     }
 
+
+
     public void dispose() {
         if (this.texture != null) {
             this.texture.dispose();

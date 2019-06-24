@@ -13,12 +13,11 @@ import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
 import code.apps.ripple.logic.App;
 import code.apps.ripple.logic.Wallpaper;
 
-public class GameFragment extends AndroidFragmentApplication implements AndroidFragmentApplication.Callbacks {
+public class GameFragment extends AndroidFragmentApplication  {
 
     private SharedPreferences a;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         AndroidApplicationConfiguration androidApplicationConfiguration = new AndroidApplicationConfiguration();
         androidApplicationConfiguration.useCompass = false;
         androidApplicationConfiguration.useWakelock = false;
@@ -30,14 +29,4 @@ public class GameFragment extends AndroidFragmentApplication implements AndroidF
         return initializeForView(app, androidApplicationConfiguration);
     }
 
-
-    @Override
-    public void exit() {
-
-    }
-
-    @Override
-    public void startActivity(Intent intent) {
-
-    }
 }

@@ -41,27 +41,10 @@ public class Launcher extends AppCompatActivity {
         this.c = (ViewPager) findViewById(R.id.container);
         this.c.setAdapter(this.b);
         ((TabLayout) findViewById(R.id.tabs)).setupWithViewPager(this.c);
-        a();
-
         startActivity(new Intent(this, HomeActivity.class));
 
     }
 
-    public void loadBannerAds() {
-
-    }
-
-    private void a() {
-        String string = getString(R.string.Banner_Id);
-        String string2 = getString(R.string.Fullpage_Id);
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("banner");
-        stringBuilder.append(string);
-        stringBuilder.append("  full ");
-        stringBuilder.append(string2);
-        Log.i("ADS", stringBuilder.toString());
-        loadBannerAds();
-    }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_launcher, menu);

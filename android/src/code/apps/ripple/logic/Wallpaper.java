@@ -22,6 +22,7 @@ public class Wallpaper extends AndroidLiveWallpaperService {
     public static long ripple_random_freq = 2000;
     public static boolean ripple_sound = true;
     public static boolean ripple_water_tail = false;
+    public  static  int sound = 0;
     SharedPreferences a;
 
     public static void loadPrefs(SharedPreferences sharedPreferences) {
@@ -37,6 +38,7 @@ public class Wallpaper extends AndroidLiveWallpaperService {
         ripple_random_freq = Long.parseLong(sharedPreferences.getString("frequency", "2000"));
         ripple_water_tail = sharedPreferences.getBoolean("water_tail", true);
         ripple_radius = sharedPreferences.getInt("radius", 2);
+        sound = sharedPreferences.getInt("sound_pos", 0);
         if (ripple_radius == 0) {
             ripple_radius = 1;
         }
@@ -44,6 +46,7 @@ public class Wallpaper extends AndroidLiveWallpaperService {
         if (ripple_displacement == 0) {
             ripple_displacement = 1;
         }
+
     }
 
     public void onCreateApplication() {

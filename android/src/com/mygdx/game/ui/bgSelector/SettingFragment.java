@@ -15,8 +15,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.mygdx.game.R;
-import com.mygdx.game.ui.image_gallery.SelectBackgroundFragment;
-import com.mygdx.game.ui.home.HomeActivity;
 
 import code.apps.ripple.logic.Wallpaper;
 
@@ -48,7 +46,7 @@ public class SettingFragment extends Fragment implements CompoundButton.OnChecke
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Toolbar toolbar=view.findViewById(R.id.toolbar);
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(v -> {
             requireActivity().onBackPressed();
         });
@@ -56,9 +54,6 @@ public class SettingFragment extends Fragment implements CompoundButton.OnChecke
         SwitchCompat sw_ripple = view.findViewById(R.id.sw_ripple);
         SwitchCompat sw_particle = view.findViewById(R.id.sw_particle);
         SwitchCompat sw_sound = view.findViewById(R.id.sw_sound);
-        view.findViewById(R.id.ll_cha_bg).setOnClickListener((v) -> {
-            ((HomeActivity) requireActivity()).addFragment(new SelectBackgroundFragment());
-        });
         setButtonView(sw_ripple);
         setButtonView(sw_particle);
         setButtonView(sw_sound);

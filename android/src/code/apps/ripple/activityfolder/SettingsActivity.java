@@ -20,7 +20,6 @@ import code.apps.ripple.logic.Assets;
 import code.apps.ripple.logic.Wallpaper;
 
 public class SettingsActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener, OnPreferenceClickListener {
-    public static final String device_id = "70682F79C44FC98C3B40BC5E621FCE35";
     private String[] r0;
 
 
@@ -31,8 +30,6 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
         addPreferencesFromResource(R.xml.pref_headers);
         setContentView(R.layout.activity_settings);
         getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
-        getString(R.string.Banner_Id);
-        getString(R.string.Fullpage_Id);
         findPreference("bg").setOnPreferenceClickListener(this);
         findPreference("particle_type").setOnPreferenceClickListener(this);
         findPreference("reset").setOnPreferenceClickListener(this);
