@@ -9,7 +9,6 @@ public class Wallpaper extends AndroidLiveWallpaperService {
     public static final String SHARED_PREF_NAME = "seet";
     public static String PREFKEY_PARTICLE_PREFIX = "pref_parti_";
     public static String PREFKEY_TOTAL_PARTICLE = "total_particle";
-    public static int background_selected = 1;
     public static boolean floating_particle = true;
     public static int particle_animation = 1;
     public static long particle_density = 1000;
@@ -26,7 +25,6 @@ public class Wallpaper extends AndroidLiveWallpaperService {
     SharedPreferences a;
 
     public static void loadPrefs(SharedPreferences sharedPreferences) {
-        background_selected = Integer.parseInt(sharedPreferences.getString("bg", "1"));
         floating_particle = sharedPreferences.getBoolean("floating_particle", true);
         particle_effect = sharedPreferences.getBoolean("particle", false);
         particle_density = Long.parseLong(sharedPreferences.getString("particle_density", "1000"));

@@ -9,14 +9,15 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mygdx.game.R;
+import com.mygdx.game.data.AppDataManager;
 import com.mygdx.game.ui.home.HomeActivity;
 
 import java.util.ArrayList;
@@ -29,18 +30,35 @@ import code.apps.ripple.logic.Wallpaper;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SelectBackgroundFragment extends Fragment implements OnImageSelection {
+public class WallPaperListFragment extends Fragment implements OnImageSelection {
 
 
     private List<ImageModal> imageModals;
     private RecyclerView recyclerView;
     private WallpaperChooseAdapter wallpaperChooseAdapter;
     private SharedPreferences sharedPreferences;
+    private boolean isOnline = true;
 
-    public SelectBackgroundFragment() {
+
+    public WallPaperListFragment() {
         // Required empty public constructor
     }
 
+    public static WallPaperListFragment newInstance(boolean isOnline) {
+        WallPaperListFragment wallPaperListFragment = new WallPaperListFragment();
+        Bundle args = new Bundle();
+        args.putBoolean("isOnline", isOnline);
+        wallPaperListFragment.setArguments(args);
+
+        return wallPaperListFragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        isOnline = getArguments().getBoolean("isOnline");
+
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -51,8 +69,32 @@ public class SelectBackgroundFragment extends Fragment implements OnImageSelecti
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        View moreBtn = view.findViewById(R.id.more_wallpaper_btn);
+        if (isOnline) {
+            moreBtn.setVisibility(View.GONE);
+            AppDataManager appDataManager = new AppDataManager();
+            appDataManager.fetchImage().observe(this, new Observer<List<ImageModal>>() {
+                @Override
+                public void onChanged(List<ImageModal> imageModals) {
+                    WallPaperListFragment.this.imageModals = imageModals;
+                    wallpaperChooseAdapter.setImageModals(imageModals);
+                    wallpaperChooseAdapter.notifyDataSetChanged();
+                }
+            });
+        } else {
+
+
+        }
+        view.findViewById(R.id.progress_bar).setVisibility(View.GONE);
+        view.findViewById(R.id.no_data_tv).setVisibility(View.GONE);
         initData();
         setUidata();
+
+
+        moreBtn.setOnClickListener((v) -> {
+            HomeActivity homeActivity = (HomeActivity) requireActivity();
+            homeActivity.addFragment(newInstance(true));
+        });
     }
 
     private void initData() {
@@ -63,12 +105,9 @@ public class SelectBackgroundFragment extends Fragment implements OnImageSelecti
         try {
             String[] list = getResources().getAssets().list("data/images");
             if (list != null) {
-                for (int i = 0; i < list.length; i++) {
-                    String stringBuilder = "file:///android_asset/data/images/" + list[i];
+                for (String s : list) {
+                    String stringBuilder = "file:///android_asset/data/images/" + s;
                     ImageModal imageModal = new ImageModal(stringBuilder);
-                    if (background_selected == i) {
-                        imageModal.isSelected = true;
-                    }
                     this.imageModals.add(imageModal);
                 }
             }
@@ -88,22 +127,17 @@ public class SelectBackgroundFragment extends Fragment implements OnImageSelecti
     }
 
     @Override
-
     public void selected(int i) {
-        for (ImageModal imageModal : this.imageModals) {
-            imageModal.isSelected = false;
-        }
         ImageModal imageModal = this.imageModals.get(i);
-        imageModal.isSelected = true;
         this.wallpaperChooseAdapter.notifyDataSetChanged();
-
         String stringBuilder = "" + i;
         this.sharedPreferences.edit().putString("bg", stringBuilder).commit();
         Assets.setTextureChanged(true);
         Assets.setOnlineImage(this.imageModals.get(i).isOnlineImage());
-
         ((HomeActivity) requireActivity()).addFragment(FullImageFragment.getInstance(imageModal));
-
-
+        if (isOnline) {
+            AppDataManager appDataManager = new AppDataManager();
+            appDataManager.downloadFile(imageModal.filepath);
+        }
     }
 }

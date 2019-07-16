@@ -28,6 +28,11 @@ public class WallpaperChooseAdapter extends RecyclerView.Adapter<WallpaperChoose
         this.activity = context;
     }
 
+
+    public void setImageModals(List<ImageModal> imageModals) {
+        this.imageModals = imageModals;
+    }
+
     public void setListener(OnImageSelection onImageSelection) {
         this.onImageSelection = onImageSelection;
     }
@@ -42,11 +47,12 @@ public class WallpaperChooseAdapter extends RecyclerView.Adapter<WallpaperChoose
         ImageModal imageModal = this.imageModals.get(position);
         String str = imageModal.filepath;
         if (imageModal.isOnlineImage()) {
-            Picasso.get().load(this.activity.getFileStreamPath(str)).fit().centerCrop().into(viewHolder.logo);
+            //Picasso.get().load(this.activity.getFileStreamPath(str)).fit().centerCrop().into(viewHolder.logo);
+            Picasso.get().load(str).fit().centerCrop().into(viewHolder.logo);
         } else {
             Picasso.get().load(str).fit().centerCrop().into(viewHolder.logo);
         }
-        viewHolder.view_selected.setChecked(imageModal.isSelected);
+        viewHolder.view_selected.setChecked(false);//todo
 
     }
 

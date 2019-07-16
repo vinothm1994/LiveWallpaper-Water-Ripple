@@ -2,6 +2,8 @@ package com.mygdx.game.ui.sound;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.AssetFileDescriptor;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,34 +13,29 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mygdx.game.R;
+import com.mygdx.game.data.AppDataManager;
+import com.mygdx.game.ui.home.HomeActivity;
 import com.mygdx.game.ui.sound.dummy.SoundContent;
 import com.mygdx.game.ui.sound.dummy.SoundContent.SoundItem;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import code.apps.ripple.logic.Wallpaper;
 
 import static android.content.Context.MODE_PRIVATE;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnSoundFragmentListener}
- * interface.
- */
-public class SoundFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
+
+public class SoundFragment extends Fragment implements OnSoundFragmentListener {
+
     private OnSoundFragmentListener mListener;
     private SoundRecyclerViewAdapter soundRecyclerViewAdapter;
+    private boolean isOnline;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -47,12 +44,11 @@ public class SoundFragment extends Fragment {
     public SoundFragment() {
     }
 
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static SoundFragment newInstance(int columnCount) {
+    public static SoundFragment newInstance(boolean isOnline) {
         SoundFragment fragment = new SoundFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
+        args.putBoolean("isOnline", isOnline);
         fragment.setArguments(args);
         return fragment;
     }
@@ -62,28 +58,21 @@ public class SoundFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            isOnline = getArguments().getBoolean("isOnline");
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sound, container, false);
+        Context context = view.getContext();
+        RecyclerView recyclerView = view.findViewById(R.id.list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        soundRecyclerViewAdapter = new SoundRecyclerViewAdapter(Collections.emptyList(), mListener);
+        recyclerView.setAdapter(soundRecyclerViewAdapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), RecyclerView.VERTICAL));
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            soundRecyclerViewAdapter = new SoundRecyclerViewAdapter(SoundContent.ITEMS, mListener);
-            recyclerView.setAdapter(soundRecyclerViewAdapter);
-            recyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), RecyclerView.VERTICAL));
-        }
         return view;
     }
 
@@ -108,7 +97,27 @@ public class SoundFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        View moreBtn = view.findViewById(R.id.more_wallpaper_btn);
+        if (isOnline) {
+            moreBtn.setVisibility(View.GONE);
+            AppDataManager appDataManager = new AppDataManager();
+            appDataManager.fetchSounds().observe(this, soundItems -> {
+                soundRecyclerViewAdapter.setSoundItems(soundItems);
+                soundRecyclerViewAdapter.notifyDataSetChanged();
+            });
+        } else {
+
+        }
+
+        view.findViewById(R.id.progress_bar).setVisibility(View.GONE);
+        view.findViewById(R.id.no_data_tv).setVisibility(View.GONE);
+
         initData();
+        moreBtn.setOnClickListener((v) -> {
+            HomeActivity homeActivity = (HomeActivity) requireActivity();
+            homeActivity.addFragment(newInstance(true));
+        });
     }
 
     private void initData() {
@@ -122,11 +131,11 @@ public class SoundFragment extends Fragment {
                 for (int i = 0; i < list.length; i++) {
                     String filename = list[i];
                     String filePath = "data/sounds/" + filename;
-                    SoundItem soundItem = new SoundItem(i+1, filename.split("\\.")[0], filePath);
+                    SoundItem soundItem = new SoundItem(i + 1, filename.split("\\.")[0], filePath);
                     soundItems.add(soundItem);
                 }
             }
-            soundRecyclerViewAdapter.selectedPos=sound;
+            soundRecyclerViewAdapter.selectedPos = sound;
             soundRecyclerViewAdapter.setSoundItems(soundItems);
             soundRecyclerViewAdapter.notifyDataSetChanged();
         } catch (Exception e) {
@@ -134,8 +143,44 @@ public class SoundFragment extends Fragment {
         }
     }
 
-    public interface OnSoundFragmentListener {
-        void playSound(SoundItem item);
-        void selectSound(int pos,SoundItem item);
+    void select(int pos) {
+        if (isOnline) {
+            AppDataManager appDataManager = new AppDataManager();
+            appDataManager.downloadFile(soundRecyclerViewAdapter.getSoundItems().get(pos).filepath);
+        }
     }
+
+
+    @Override
+    public void playSound(SoundContent.SoundItem item) {
+
+        try {
+            MediaPlayer mediaPlayer = new MediaPlayer();
+            if (!isOnline){
+                AssetFileDescriptor descriptor = requireContext().getAssets().openFd(item.filepath);
+                mediaPlayer.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
+                descriptor.close();
+            }
+            else {
+                String file="";
+                mediaPlayer.setDataSource(file);
+            }
+
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+    }
+
+    @Override
+    public void selectSound(int pos, SoundContent.SoundItem item) {
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences(Wallpaper.SHARED_PREF_NAME, MODE_PRIVATE);
+        sharedPreferences.edit().putInt("sound_pos", pos).apply();
+        Wallpaper.loadPrefs(sharedPreferences);
+
+    }
+
+
 }

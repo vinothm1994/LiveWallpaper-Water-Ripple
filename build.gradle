@@ -8,9 +8,10 @@ buildscript {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         jcenter()
         google()
+
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0'
+        classpath 'com.android.tools.build:gradle:3.4.1'
         
 
     }
@@ -37,6 +38,11 @@ allprojects {
         google()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven { url 'https://maven.google.com' }
+        // Add Appodeal repository
+        maven { url "https://artifactory.appodeal.com/appodeal" }
+        // Add Mopub repository
+        maven { url "https://s3.amazonaws.com/moat-sdk-builds" }
     }
 }
 

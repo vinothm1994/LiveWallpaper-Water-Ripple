@@ -12,7 +12,6 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mygdx.game.R;
-import com.mygdx.game.ui.sound.SoundFragment.OnSoundFragmentListener;
 import com.mygdx.game.ui.sound.dummy.SoundContent.SoundItem;
 
 import java.util.List;
@@ -34,6 +33,10 @@ public class SoundRecyclerViewAdapter extends RecyclerView.Adapter<SoundRecycler
 
     void setSoundItems(List<SoundItem> soundItems) {
         this.soundItems = soundItems;
+    }
+
+    public List<SoundItem> getSoundItems() {
+        return soundItems;
     }
 
     @NonNull

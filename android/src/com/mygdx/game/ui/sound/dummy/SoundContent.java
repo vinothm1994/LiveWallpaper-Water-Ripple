@@ -3,33 +3,15 @@ package com.mygdx.game.ui.sound.dummy;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 
 public class SoundContent {
 
 
-    public static final List<SoundItem> ITEMS = new ArrayList<SoundItem>();
 
-
-    private static final int COUNT = 25;
-
-    static {
-        for (int i = 1; i <= COUNT; i++) {
-            addItem(createDummyItem(i));
-        }
-    }
-
-    private static void addItem(SoundItem item) {
-        ITEMS.add(item);
-    }
-
-    private static SoundItem createDummyItem(int position) {
-        return new SoundItem(position, "Item " + position, "");
-    }
-
-
-    public static class SoundItem {
+    public static class SoundItem implements  Comparable<SoundItem>{
         public final int id;
         public final String content;
         public final String filepath;
@@ -45,5 +27,26 @@ public class SoundContent {
         public String toString() {
             return content;
         }
+
+        @Override
+        public int compareTo(SoundItem soundItem) {
+            return Integer.compare(id,soundItem.id);
+        }
+
+
+        public  static Comparator<SoundItem> sizeCom=new Comparator<SoundItem>() {
+            @Override
+            public int compare(SoundItem soundItem, SoundItem t1) {
+                return 0;
+            }
+        };
+
+        public  static   Comparator<SoundItem> isCOm=new Comparator<SoundItem>() {
+            @Override
+            public int compare(SoundItem soundItem, SoundItem t1) {
+                return 0;
+            }
+        };
+
     }
 }

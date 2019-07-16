@@ -103,6 +103,7 @@ public class App implements ApplicationListener, InputProcessorLW {
     @Override
     public void create() {
         this.u = new SpriteBatch();
+        //todo move to file
         this.sound = Gdx.audio.newSound(Gdx.files.internal("data/sounds").list()[Wallpaper.sound]);
         this.perspectiveCamera = new PerspectiveCamera(90.0f, (float) Gdx.graphics.getWidth(), (float) Gdx.graphics.getHeight());
         this.width = (float) Gdx.graphics.getWidth();
@@ -124,6 +125,7 @@ public class App implements ApplicationListener, InputProcessorLW {
         this.vector31 = new Vector3();
         try {
             this.assets.load();
+            Assets.setTextureChanged(false);
         } catch (IOException e) {
             e.printStackTrace();
         }

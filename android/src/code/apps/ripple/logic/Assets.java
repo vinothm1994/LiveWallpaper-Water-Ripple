@@ -2,6 +2,7 @@ package code.apps.ripple.logic;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
@@ -15,6 +16,7 @@ import code.apps.ripple.webcomponents.FileDownloader;
 public class Assets {
     public static boolean isOnlineImage = false;
     public static boolean isTextureChanged = false;
+    public static String TAG = Assets.class.getSimpleName();
     public Texture texture;
     Context context;
     SharedPreferences sharedPreferences;
@@ -41,6 +43,8 @@ public class Assets {
     }
 
     public void load() throws IOException {
+        Log.i(TAG, "load: ");
+
         setTextureChanged(true);
         if (isTextureChanged()) {
             if (this.texture != null) {
@@ -51,14 +55,13 @@ public class Assets {
                 return;
             }
             if (isOnlineImage()) {
-                this.texture = new Texture(Gdx.files.absolute(this.context.getFileStreamPath(this.sharedPreferences.getString(FileDownloader.SPKEY_SELECTED_IMAGE, "")).getAbsolutePath()));
+                this.texture = new Texture(Gdx.files.absolute((this.sharedPreferences.getString(FileDownloader.SPKEY_SELECTED_IMAGE, ""))));
                 return;
             }
             FileHandle internal = Gdx.files.internal("data/images");
             this.texture = new Texture(internal.list()[Integer.parseInt(this.sharedPreferences.getString("bg", "1"))]);
         }
     }
-
 
 
     public void dispose() {

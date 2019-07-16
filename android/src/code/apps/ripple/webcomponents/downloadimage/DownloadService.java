@@ -10,7 +10,6 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.mygdx.game.R;
 
-import code.apps.ripple.activityfolder.choosebg.BackgroundChooseActivity;
 import code.apps.ripple.webcomponents.FileDownloader;
 import code.apps.ripple.webcomponents.OnImageDownloadFinished;
 
@@ -37,8 +36,8 @@ public class DownloadService extends IntentService implements OnImageDownloadFin
     }
 
     private void b(Download download) {
-        Intent intent = new Intent(BackgroundChooseActivity.MESSAGE_PROGRESS);
-        intent.putExtra(BackgroundChooseActivity.KEY_DONWLOAD, download);
+        Intent intent = new Intent("MESSAGE_PROGRESS");
+        intent.putExtra("KEY_DONWLOAD", download);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 

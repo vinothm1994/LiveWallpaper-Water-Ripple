@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/card_detailing"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".ui.HomeFragment">
+
+    <include layout="@layout/toolbar" />
+
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:layout_weight="1"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:flexDirection="row"
+        app:flexWrap="wrap"
+        app:alignItems="flex_end"
+        app:justifyContent="center"
+        app:alignContent="flex_start" >
+
+        <LinearLayout
+            android:id="@+id/ll_wallapper"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@drawable/card"
+            android:foreground="?selectableItemBackgroundBorderless"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="30dp">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_image" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="Wallpaper"
+                android:textSize="18dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_sounds"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@drawable/card"
+            android:foreground="?selectableItemBackgroundBorderless"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="30dp">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_sound"
+                android:tint="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="Sounds"
+                android:textSize="18dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_setting"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@drawable/card"
+            android:foreground="?selectableItemBackgroundBorderless"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="30dp">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_settings"
+                android:tint="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="Settings"
+                android:textSize="18dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_share"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@drawable/card"
+            android:foreground="?selectableItemBackgroundBorderless"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="30dp">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_share"
+                android:tint="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="Share"
+                android:textSize="18dp" />
+
+        </LinearLayout>
+
+
+</com.google.android.flexbox.FlexboxLayout>
+
+    <com.appodeal.ads.BannerView
+        android:id="@+id/appodealBannerView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:visibility="visible" />
+
+</LinearLayout>
