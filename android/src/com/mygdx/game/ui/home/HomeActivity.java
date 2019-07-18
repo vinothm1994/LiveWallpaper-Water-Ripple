@@ -11,7 +11,6 @@ import com.mygdx.game.R;
 import com.mygdx.game.ui.dashboard.DashboardActivity;
 
 public class HomeActivity extends AppCompatActivity {
-    public static final String APP_KEY = "fee50c333ff3825fd6ad6d38cff78154de3025546d47a84f";
 
 
     @Override

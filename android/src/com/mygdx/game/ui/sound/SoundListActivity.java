@@ -13,14 +13,11 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.appodeal.ads.Appodeal;
 import com.mygdx.game.R;
 import com.mygdx.game.data.AppDataManager;
-import com.mygdx.game.ui.AppodealWrapperAdapter;
 import com.mygdx.game.ui.home.HomeActivity;
 import com.mygdx.game.ui.sound.dummy.SoundContent;
 import com.mygdx.game.ui.sound.dummy.SoundContent.SoundItem;
-import com.mygdx.game.utils.AppodealNativeCallbacks;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,8 +49,6 @@ public class SoundListActivity extends AppCompatActivity implements OnSoundFragm
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Appodeal.initialize(this, HomeActivity.APP_KEY, Appodeal.NATIVE, false);
-        Appodeal.setNativeCallbacks(new AppodealNativeCallbacks(this));
 
         isOnline = getIntent().getBooleanExtra("isOnline", false);
         setContentView(R.layout.activity_sound_list);
@@ -61,9 +56,7 @@ public class SoundListActivity extends AppCompatActivity implements OnSoundFragm
         RecyclerView recyclerView = findViewById(R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         soundRecyclerViewAdapter = new SoundRecyclerViewAdapter(Collections.emptyList(), mListener);
-        RecyclerView.Adapter temp = soundRecyclerViewAdapter;
-        AppodealWrapperAdapter appodealWrapperAdapter = new AppodealWrapperAdapter(temp, 2, AppodealWrapperAdapter.NATIVE_TYPE_NEWS_FEED);
-        recyclerView.setAdapter(appodealWrapperAdapter);
+        recyclerView.setAdapter(soundRecyclerViewAdapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, RecyclerView.VERTICAL));
 
 

@@ -128,10 +128,6 @@
 
 </com.google.android.flexbox.FlexboxLayout>
 
-    <com.appodeal.ads.BannerView
-        android:id="@+id/appodealBannerView"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:visibility="visible" />
+
 
 </LinearLayout>

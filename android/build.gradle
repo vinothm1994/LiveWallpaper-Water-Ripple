@@ -111,51 +111,11 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-gson:2.4.0"){
         exclude  group: 'com.google.code.gson', module: 'gson'
     }
-
-
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.google.android:flexbox:1.1.0'
-
     implementation 'com.android.support:multidex:1.0.3'
-    // Requesting Consent from European Users
-    // https://developers.google.com/admob/android/eu-consent
-    implementation('com.google.android.ads.consent:consent-library:1.0.3') {
-        exclude module: 'gson'
-    }
 
-    // Include Appodeal SDK
-    implementation ('com.appodeal.ads:nodex:2.5.6'){
-
-            exclude module: 'gson'
-            exclude module: 'picasso'
-            exclude module: 'okhttp'
-            exclude module: 'okio'
-            exclude module: 'retrofit'
-            exclude module: 'converter-gson'
-
-    }
-
-
-    // Include optional Appodeal SDK dependencies
-    implementation 'com.appodeal.optional:flurry-ads:11.6.0'
-    implementation 'com.appodeal.optional:flurry-analytics:11.6.0'
-
-    implementation('com.mopub:mopub-sdk:5.7.0@aar') {
-        transitive = true
-        // To exclude AVID
-        exclude module: 'libAvid-mopub'
-        // To exclude Moat
-        exclude module: 'moat-mobile-app-kit'
-        // Exclude, since Appodeal SDK not support mopub native video
-        exclude module: 'mopub-sdk-native-video'
-    }
-    // Include myTarget required dependencies
-    implementation 'com.google.android.exoplayer:exoplayer-core:2.8.4'
-    implementation 'com.google.android.exoplayer:exoplayer-hls:2.8.4'
-
-    // Google Play services
-    implementation 'com.google.android.gms:play-services-ads:15.0.0'
 
 }
 

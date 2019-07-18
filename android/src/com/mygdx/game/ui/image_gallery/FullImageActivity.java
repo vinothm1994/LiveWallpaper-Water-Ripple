@@ -16,13 +16,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
-import com.appodeal.ads.Appodeal;
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
 import com.mygdx.game.R;
 import com.mygdx.game.ui.bgSelector.SettingActivity;
 import com.mygdx.game.ui.home.HomeActivity;
 import com.mygdx.game.ui.libgdx.LiveWallpaperFragment;
-import com.mygdx.game.utils.AppodealBannerCallbacks;
 
 import code.apps.ripple.activityfolder.choosebg.ImageModal;
 import code.apps.ripple.logic.Wallpaper;
@@ -79,25 +77,12 @@ public class FullImageActivity extends AppCompatActivity implements AndroidFragm
             return false;
         });
 
-        init();
 
 
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Appodeal.onResume(this, Appodeal.BANNER);
 
     }
 
-    private void init() {
-        Appodeal.setBannerViewId(R.id.appodealBannerView);
-        Appodeal.initialize(this, HomeActivity.APP_KEY, Appodeal.BANNER, false);
-        Appodeal.setBannerCallbacks(new AppodealBannerCallbacks(this));
-        Appodeal.show(this, Appodeal.BANNER);
-    }
+
 
 
     public void setWallpaper(@NonNull Context context) {

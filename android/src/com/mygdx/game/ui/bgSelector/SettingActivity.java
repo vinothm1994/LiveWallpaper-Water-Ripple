@@ -11,10 +11,8 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
-import com.appodeal.ads.Appodeal;
 import com.mygdx.game.R;
 import com.mygdx.game.ui.home.HomeActivity;
-import com.mygdx.game.utils.AppodealBannerCallbacks;
 
 import code.apps.ripple.logic.Wallpaper;
 
@@ -50,25 +48,19 @@ public class SettingActivity extends AppCompatActivity implements CompoundButton
         sw_ripple.setOnCheckedChangeListener(this);
         sw_particle.setOnCheckedChangeListener(this);
         sw_sound.setOnCheckedChangeListener(this);
-        init();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Appodeal.onResume(this, Appodeal.BANNER_VIEW);
+
 
     }
 
 
 
 
-    private void init() {
-        Appodeal.setBannerViewId(R.id.appodealBannerView);
-        Appodeal.initialize(this, HomeActivity.APP_KEY, Appodeal.BANNER, false);
-        Appodeal.setBannerCallbacks(new AppodealBannerCallbacks(this));
-        Appodeal.show(this, Appodeal.BANNER_VIEW);
-    }
+
 
 
 

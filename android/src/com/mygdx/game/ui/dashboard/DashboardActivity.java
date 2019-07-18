@@ -11,13 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
-import com.appodeal.ads.Appodeal;
 import com.mygdx.game.R;
 import com.mygdx.game.ui.bgSelector.SettingActivity;
 import com.mygdx.game.ui.home.HomeActivity;
 import com.mygdx.game.ui.image_gallery.WallPaperListActivity;
 import com.mygdx.game.ui.sound.SoundListActivity;
-import com.mygdx.game.utils.AppodealBannerCallbacks;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,15 +28,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     }
 
 
-    private void init() {
-        Appodeal.disableWriteExternalStoragePermissionCheck();
-        Appodeal.disableLocationPermissionCheck();
-        //Appodeal.setTesting(true);
-        Appodeal.setBannerViewId(R.id.appodealBannerView);
-        Appodeal.initialize(this, HomeActivity.APP_KEY, Appodeal.BANNER, false);
-        Appodeal.setBannerCallbacks(new AppodealBannerCallbacks(this));
-        Appodeal.show(this, Appodeal.BANNER);
-    }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,16 +41,10 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         findViewById(R.id.ll_sounds).setOnClickListener(this);
         findViewById(R.id.ll_setting).setOnClickListener(this);
         findViewById(R.id.ll_share).setOnClickListener(this);
-        init();
+
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Appodeal.onResume(this, Appodeal.BANNER);
-
-    }
 
     @Override
     public void onClick(View view) {

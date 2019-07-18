@@ -16,13 +16,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.appodeal.ads.Appodeal;
 import com.mygdx.game.R;
 import com.mygdx.game.data.AppDataManager;
-import com.mygdx.game.ui.AppodealWrapperAdapter;
 import com.mygdx.game.ui.home.HomeActivity;
-import com.mygdx.game.utils.AppodealBannerCallbacks;
-import com.mygdx.game.utils.AppodealNativeCallbacks;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,8 +85,6 @@ public class WallPaperListActivity extends AppCompatActivity implements OnImageS
     }
 
     private void initData() {
-        Appodeal.initialize(this, HomeActivity.APP_KEY, Appodeal.INTERSTITIAL|Appodeal.NATIVE, false);
-        Appodeal.setNativeCallbacks(new AppodealNativeCallbacks(this));
 
         this.sharedPreferences = getSharedPreferences(Wallpaper.SHARED_PREF_NAME, 0);
         int background_selected = Integer.parseInt(sharedPreferences.getString("bg", "1"));
@@ -111,23 +105,14 @@ public class WallPaperListActivity extends AppCompatActivity implements OnImageS
 
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        boolean isShown = Appodeal.show(this, Appodeal.INTERSTITIAL);
-        AppodealBannerCallbacks.showToast(this, String.valueOf(isShown));
-    }
+
 
     private void setUidata() {
         this.recyclerView = findViewById(R.id.rv);
         LinearLayoutManager linearLayoutManager = new GridLayoutManager(this, 2);
         this.recyclerView.setLayoutManager(linearLayoutManager);
         this.wallpaperChooseAdapter = new WallpaperChooseAdapter(this.imageModals, this);
-
-
-        RecyclerView.Adapter temp = wallpaperChooseAdapter;
-        AppodealWrapperAdapter appodealWrapperAdapter = new AppodealWrapperAdapter(temp, 2, AppodealWrapperAdapter.NATIVE_TYPE_CONTENT_STREAM);
-        this.recyclerView.setAdapter(appodealWrapperAdapter);
+        this.recyclerView.setAdapter(wallpaperChooseAdapter);
         this.recyclerView.addItemDecoration(new DividerItemDecoration(this.recyclerView.getContext(), linearLayoutManager.getOrientation()));
         this.wallpaperChooseAdapter.setListener(this);
     }
