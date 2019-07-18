@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/card_detailing"
     android:orientation="vertical"
-    tools:context=".ui.bgSelector.SettingFragment">
+    tools:context=".ui.bgSelector.SettingActivity">
 
     <include layout="@layout/toolbar" />
 
@@ -15,8 +15,9 @@
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list"
+            android:id="@+id/rv"
             android:layout_width="match_parent"
+
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:paddingBottom="70dp">
@@ -47,17 +48,15 @@
                 android:drawablePadding="8dp"
                 android:focusable="false"
                 android:foreground="@android:color/transparent"
-                android:text="More Sounds" />
+                android:text="More Wallpapers" />
         </FrameLayout>
 
         <ProgressBar
-            android:visibility="gone"
             android:id="@+id/progress_bar"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
-            android:visibility="gone"
             android:textSize="25dp"
             android:textColor="@color/black"
             android:gravity="center"

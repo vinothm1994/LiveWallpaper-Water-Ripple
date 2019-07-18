@@ -1,37 +1,34 @@
 package com.mygdx.game.ui.sound;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.appodeal.ads.Appodeal;
 import com.mygdx.game.R;
 import com.mygdx.game.data.AppDataManager;
+import com.mygdx.game.ui.AppodealWrapperAdapter;
 import com.mygdx.game.ui.home.HomeActivity;
 import com.mygdx.game.ui.sound.dummy.SoundContent;
 import com.mygdx.game.ui.sound.dummy.SoundContent.SoundItem;
+import com.mygdx.game.utils.AppodealNativeCallbacks;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 import code.apps.ripple.logic.Wallpaper;
 
-import static android.content.Context.MODE_PRIVATE;
 
-
-
-public class SoundFragment extends Fragment implements OnSoundFragmentListener {
+public class SoundListActivity extends AppCompatActivity implements OnSoundFragmentListener {
 
     private OnSoundFragmentListener mListener;
     private SoundRecyclerViewAdapter soundRecyclerViewAdapter;
@@ -41,64 +38,36 @@ public class SoundFragment extends Fragment implements OnSoundFragmentListener {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public SoundFragment() {
+    public SoundListActivity() {
     }
 
     @SuppressWarnings("unused")
-    public static SoundFragment newInstance(boolean isOnline) {
-        SoundFragment fragment = new SoundFragment();
-        Bundle args = new Bundle();
-        args.putBoolean("isOnline", isOnline);
-        fragment.setArguments(args);
-        return fragment;
+    public static Intent newInstance(Context context, boolean isOnline) {
+
+        Intent intent = new Intent(context, SoundListActivity.class);
+        intent.putExtra("isOnline", isOnline);
+        return intent;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Appodeal.initialize(this, HomeActivity.APP_KEY, Appodeal.NATIVE, false);
+        Appodeal.setNativeCallbacks(new AppodealNativeCallbacks(this));
 
-        if (getArguments() != null) {
-            isOnline = getArguments().getBoolean("isOnline");
-        }
-    }
+        isOnline = getIntent().getBooleanExtra("isOnline", false);
+        setContentView(R.layout.activity_sound_list);
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_sound, container, false);
-        Context context = view.getContext();
-        RecyclerView recyclerView = view.findViewById(R.id.list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        RecyclerView recyclerView = findViewById(R.id.list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         soundRecyclerViewAdapter = new SoundRecyclerViewAdapter(Collections.emptyList(), mListener);
-        recyclerView.setAdapter(soundRecyclerViewAdapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), RecyclerView.VERTICAL));
-
-        return view;
-    }
-
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnSoundFragmentListener) {
-            mListener = (OnSoundFragmentListener) context;
-        } else {
-
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
+        RecyclerView.Adapter temp = soundRecyclerViewAdapter;
+        AppodealWrapperAdapter appodealWrapperAdapter = new AppodealWrapperAdapter(temp, 2, AppodealWrapperAdapter.NATIVE_TYPE_NEWS_FEED);
+        recyclerView.setAdapter(appodealWrapperAdapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, RecyclerView.VERTICAL));
 
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        View moreBtn = view.findViewById(R.id.more_wallpaper_btn);
+        View moreBtn = findViewById(R.id.more_wallpaper_btn);
         if (isOnline) {
             moreBtn.setVisibility(View.GONE);
             AppDataManager appDataManager = new AppDataManager();
@@ -110,18 +79,17 @@ public class SoundFragment extends Fragment implements OnSoundFragmentListener {
 
         }
 
-        view.findViewById(R.id.progress_bar).setVisibility(View.GONE);
-        view.findViewById(R.id.no_data_tv).setVisibility(View.GONE);
+        findViewById(R.id.progress_bar).setVisibility(View.GONE);
+        findViewById(R.id.no_data_tv).setVisibility(View.GONE);
 
         initData();
         moreBtn.setOnClickListener((v) -> {
-            HomeActivity homeActivity = (HomeActivity) requireActivity();
-            homeActivity.addFragment(newInstance(true));
+            startActivity(newInstance(this, true));
         });
     }
 
     private void initData() {
-        SharedPreferences sharedPreferences = requireContext().getSharedPreferences(Wallpaper.SHARED_PREF_NAME, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(Wallpaper.SHARED_PREF_NAME, MODE_PRIVATE);
         int sound = sharedPreferences.getInt("sound_pos", 0);
 
         ArrayList<SoundItem> soundItems = new ArrayList<>();
@@ -132,6 +100,10 @@ public class SoundFragment extends Fragment implements OnSoundFragmentListener {
                     String filename = list[i];
                     String filePath = "data/sounds/" + filename;
                     SoundItem soundItem = new SoundItem(i + 1, filename.split("\\.")[0], filePath);
+                    soundItems.add(soundItem);
+
+                    soundItems.add(soundItem);
+                    soundItems.add(soundItem);
                     soundItems.add(soundItem);
                 }
             }
@@ -156,13 +128,12 @@ public class SoundFragment extends Fragment implements OnSoundFragmentListener {
 
         try {
             MediaPlayer mediaPlayer = new MediaPlayer();
-            if (!isOnline){
-                AssetFileDescriptor descriptor = requireContext().getAssets().openFd(item.filepath);
+            if (!isOnline) {
+                AssetFileDescriptor descriptor = getAssets().openFd(item.filepath);
                 mediaPlayer.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
                 descriptor.close();
-            }
-            else {
-                String file="";
+            } else {
+                String file = "";
                 mediaPlayer.setDataSource(file);
             }
 
@@ -176,7 +147,7 @@ public class SoundFragment extends Fragment implements OnSoundFragmentListener {
 
     @Override
     public void selectSound(int pos, SoundContent.SoundItem item) {
-        SharedPreferences sharedPreferences = requireContext().getSharedPreferences(Wallpaper.SHARED_PREF_NAME, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(Wallpaper.SHARED_PREF_NAME, MODE_PRIVATE);
         sharedPreferences.edit().putInt("sound_pos", pos).apply();
         Wallpaper.loadPrefs(sharedPreferences);
 

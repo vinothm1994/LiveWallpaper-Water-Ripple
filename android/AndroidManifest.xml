@@ -3,7 +3,7 @@
     package="com.mygdx.game">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
 
     <application
@@ -12,9 +12,9 @@
         android:appCategory="game"
         android:icon="@drawable/ic_launcher"
         android:isGame="true"
-        android:usesCleartextTraffic="true"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
         <activity android:name=".ui.home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,6 +22,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.dashboard.DashboardActivity" />
+        <activity android:name=".ui.image_gallery.WallPaperListActivity" />
+        <activity android:name=".ui.sound.SoundListActivity" />
+        <activity android:name=".ui.bgSelector.SettingActivity" />
+        <activity android:name=".ui.image_gallery.FullImageActivity" />
+
+
         <activity
             android:name=".AndroidLauncher"
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout"

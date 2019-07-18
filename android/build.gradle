@@ -17,7 +17,9 @@ android {
         exclude 'META-INF/robovm/ios/robovm.xml'
     }
     defaultConfig {
-        applicationId "com.mygdx.game"
+        //applicationId "com1.mygdx.game"
+        applicationId "com.appodeal.test"
+
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 1

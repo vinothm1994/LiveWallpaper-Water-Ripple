@@ -3,57 +3,46 @@ package com.mygdx.game.ui.bgSelector;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import com.appodeal.ads.Appodeal;
 import com.mygdx.game.R;
+import com.mygdx.game.ui.home.HomeActivity;
+import com.mygdx.game.utils.AppodealBannerCallbacks;
 
 import code.apps.ripple.logic.Wallpaper;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SettingFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
+public class SettingActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
 
     private SharedPreferences sharedPreferences;
 
-    public SettingFragment() {
+    public SettingActivity() {
         // Required empty public constructor
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.sharedPreferences = requireContext().getSharedPreferences(Wallpaper.SHARED_PREF_NAME, 0);
-    }
-
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_setting, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        this.sharedPreferences = getSharedPreferences(Wallpaper.SHARED_PREF_NAME, 0);
+        setContentView(R.layout.activity_setting);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(v -> {
-            requireActivity().onBackPressed();
+            onBackPressed();
         });
 
-        SwitchCompat sw_ripple = view.findViewById(R.id.sw_ripple);
-        SwitchCompat sw_particle = view.findViewById(R.id.sw_particle);
-        SwitchCompat sw_sound = view.findViewById(R.id.sw_sound);
+        SwitchCompat sw_ripple = findViewById(R.id.sw_ripple);
+        SwitchCompat sw_particle = findViewById(R.id.sw_particle);
+        SwitchCompat sw_sound = findViewById(R.id.sw_sound);
         setButtonView(sw_ripple);
         setButtonView(sw_particle);
         setButtonView(sw_sound);
@@ -61,7 +50,27 @@ public class SettingFragment extends Fragment implements CompoundButton.OnChecke
         sw_ripple.setOnCheckedChangeListener(this);
         sw_particle.setOnCheckedChangeListener(this);
         sw_sound.setOnCheckedChangeListener(this);
+        init();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Appodeal.onResume(this, Appodeal.BANNER_VIEW);
+
+    }
+
+
+
+
+    private void init() {
+        Appodeal.setBannerViewId(R.id.appodealBannerView);
+        Appodeal.initialize(this, HomeActivity.APP_KEY, Appodeal.BANNER, false);
+        Appodeal.setBannerCallbacks(new AppodealBannerCallbacks(this));
+        Appodeal.show(this, Appodeal.BANNER_VIEW);
+    }
+
+
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -77,6 +86,7 @@ public class SettingFragment extends Fragment implements CompoundButton.OnChecke
         Wallpaper.loadPrefs(sharedPreferences);
 
     }
+
 
 
     public void setButtonView(CompoundButton buttonView) {

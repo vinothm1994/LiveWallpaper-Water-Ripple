@@ -6,12 +6,13 @@
     android:background="@color/white"
     android:orientation="vertical"
 
-    tools:context=".ui.bgSelector.SettingFragment">
+    tools:context=".ui.bgSelector.SettingActivity">
 
     <include layout="@layout/toolbar" />
 
 
     <androidx.core.widget.NestedScrollView
+        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -83,5 +84,11 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <com.appodeal.ads.BannerView
+        android:id="@+id/appodealBannerView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:visibility="visible" />
 
 </LinearLayout>

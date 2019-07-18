@@ -15,8 +15,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.mygdx.game.R;
-import com.mygdx.game.ui.image_gallery.WallPaperListFragment;
-import com.mygdx.game.ui.sound.SoundFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,7 +44,7 @@ public class HomeFragment extends Fragment {
         viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                return position == 0 ? new WallPaperListFragment() : new SoundFragment();
+                return position == 0 ? null :null;
             }
 
             @Override
